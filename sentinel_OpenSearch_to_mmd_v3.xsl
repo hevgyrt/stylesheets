@@ -21,7 +21,7 @@
             <xsl:element name="mmd:metadata_status" >Active</xsl:element>
             <!-- 3.3 - collection -->
             <xsl:element name="mmd:collection" >NBS</xsl:element>
-            <!-- 3.4 -->
+            <!-- 3.4 - metadata_title -->
             <xsl:apply-templates select="summary" />
             <!-- 3.5 - abstract-->
             <xsl:apply-templates select="str[@name = 'platformname']"/>
@@ -34,7 +34,7 @@
             <!-- 3.9 - dataset_production_status -->
             <xsl:element name="mmd:dataset_production_status">In Work</xsl:element>
             <!-- 3.10 - operational_status -->
-            <xsl:element name="mmd:operational_status">operational</xsl:element>
+            <xsl:element name="mmd:operational_status">Operational</xsl:element>
             <!-- 3.11 - iso_topic_category (see 3.21 - instrument) -->
             <!-- 3.12 - temporal_extent -->
             <xsl:element name="mmd:temporal_extent">
@@ -149,7 +149,7 @@
 
      <!-- TEMPLATES: -->
 
-    <!--  metadata_identifier -->
+    <!--  title and platform -->
     <xsl:template match="str[@name = 'identifier']">
       <xsl:variable name="id" select="."/>
       <xsl:element name="mmd:metadata_identifier">
@@ -196,9 +196,9 @@
             The SENTINEL-1 mission comprises a constellation of two polar-orbiting satellites, operating day and night performing C-band synthetic aperture radar imaging, enabling them to acquire imagery regardless of the weather.
           </xsl:element>
           <xsl:element name="mmd:related_information" >
-            <xsl:element name="mmd:type">User Guide</xsl:element>
-            <xsl:element name="mmd:resource">https://sentinel.esa.int/web/sentinel/missions/sentinel-1</xsl:element>
+            <xsl:element name="mmd:type">Users guide</xsl:element>
             <xsl:element name="mmd:description">URI to a users guide or product manual for the dataset.</xsl:element>
+            <xsl:element name="mmd:resource">https://sentinel.esa.int/web/sentinel/missions/sentinel-1</xsl:element>
           </xsl:element>
         </xsl:when>
         <xsl:when test="$p_id = 'Sentinel-2'">
@@ -207,9 +207,9 @@
             Each of the satellites in the SENTINEL-2 mission carries a single payload: the Multi-Spectral Instrument (MSI).
           </xsl:element>
           <xsl:element name="mmd:related_information" >
-            <xsl:element name="mmd:type">User Guide</xsl:element>
-            <xsl:element name="mmd:resource">https://sentinel.esa.int/web/sentinel/missions/sentinel-2</xsl:element>
+            <xsl:element name="mmd:type">Users guide</xsl:element>
             <xsl:element name="mmd:description">URI to a users guide or product manual for the dataset.</xsl:element>
+            <xsl:element name="mmd:resource">https://sentinel.esa.int/web/sentinel/missions/sentinel-2</xsl:element>
           </xsl:element>
         </xsl:when>
         <xsl:when test="$p_id = 'Sentinel-3'">
@@ -218,9 +218,9 @@
             The main objective of the SENTINEL-3 mission is to measure sea surface topography, sea and land surface temperature, and ocean and land surface colour with high accuracy and reliability to support ocean forecasting systems, environmental monitoring and climate monitoring.
           </xsl:element>
           <xsl:element name="mmd:related_information" >
-            <xsl:element name="mmd:type">User Guide</xsl:element>
-            <xsl:element name="mmd:resource">https://sentinel.esa.int/web/sentinel/missions/sentinel-3</xsl:element>
+            <xsl:element name="mmd:type">Users guide</xsl:element>
             <xsl:element name="mmd:description">URI to a users guide or product manual for the dataset.</xsl:element>
+            <xsl:element name="mmd:resource">https://sentinel.esa.int/web/sentinel/missions/sentinel-3</xsl:element>
           </xsl:element>
         </xsl:when>
         <xsl:otherwise>
@@ -228,7 +228,7 @@
             <xsl:attribute name="xml:lang">en</xsl:attribute>
           </xsl:element>
           <xsl:element name="mmd:related_information" >
-            <xsl:element name="mmd:type">User Guide</xsl:element>
+            <xsl:element name="mmd:type">Users guide</xsl:element>
             <xsl:element name="mmd:resource"></xsl:element>
           </xsl:element>
         </xsl:otherwise>
@@ -279,9 +279,9 @@
           </xsl:element>
         </xsl:when>
       </xsl:choose>
-      <xsl:element name="mmd:product_type">
+      <!-- <xsl:element name="mmd:product_type">
         <xsl:value-of select="$product_type" />
-      </xsl:element>
+      </xsl:element>-->
     </xsl:template>
 
     <!-- <xsl:template match="str[@name = 'sensoroperationalmode']"> -->
@@ -296,7 +296,7 @@
       <!-- </xsl:element> -->
     <!-- </xsl:template> -->
 
-    <!-- title -->
+    <!-- metadata_identifier -->
     <xsl:template match="summary">
         <xsl:element name="mmd:title">
             <xsl:attribute name="xml:lang">en</xsl:attribute>
@@ -309,7 +309,7 @@
       <xsl:variable name="name" select="@name"/>
       <xsl:variable name="date" select="."/>
         <xsl:element name="mmd:start_date">
-          <xsl:value-of select="substring($date,1,10)"/>
+          <xsl:value-of select="$date"/>
           </xsl:element>
     </xsl:template>
 
@@ -317,7 +317,7 @@
       <xsl:variable name="name" select="@name"/>
       <xsl:variable name="date" select="."/>
           <xsl:element name="mmd:end_date">
-            <xsl:value-of select="substring($date,1,10)"/>
+            <xsl:value-of select="$date"/>
           </xsl:element>
     </xsl:template>
 
@@ -325,7 +325,7 @@
     <xsl:template match="date[@name = 'ingestiondate']">
       <xsl:variable name="date" select="."/>
       <xsl:element name="mmd:last_metadata_update">
-          <xsl:value-of select="substring($date,1,10)"/>
+          <xsl:value-of select="$date"/>
       </xsl:element>
     </xsl:template>
 
@@ -345,3 +345,4 @@
 
 
   </xsl:stylesheet>
+
